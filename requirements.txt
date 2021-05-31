@@ -2,3 +2,4 @@ numpy
 fastpi
 opencv-python
 urllib
+uvicorn
