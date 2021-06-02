@@ -10,3 +10,15 @@ to run the following code as in fast-api format :
 uvicorn main:app --reload (use this command in terminal )
 
 When connected to local server put /docs --- http://127.0.0.1:8000/docs ----- so we need not need postman to test can do it from here
+
+Libraries required to install :
+
+pip install numpy
+
+pip install fastpi
+
+pip install opencv-python
+
+pip install urllib
+
+pip install uvicorn
