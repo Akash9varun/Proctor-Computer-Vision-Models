@@ -25,6 +25,6 @@ pip install uvicorn
 
 Docker Commands :
 
-docker build . -t ocr:latest
+docker build . -t proctor:latest
 
-docker run -it -p 90:90 ocr:latest
+docker run -it -p 90:90 proctor:latest
