@@ -22,3 +22,9 @@ pip install opencv-python
 pip install urllib
 
 pip install uvicorn
+
+Docker Commands :
+
+docker build . -t ocr:latest
+
+docker run -it -p 90:90 ocr:latest
