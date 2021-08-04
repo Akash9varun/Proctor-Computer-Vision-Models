@@ -13,6 +13,7 @@ When connected to local server put /docs --- http://127.0.0.1:8000/docs ----- so
 
 Libraries required to install :
 
+
 pip install numpy
 
 pip install fastpi
