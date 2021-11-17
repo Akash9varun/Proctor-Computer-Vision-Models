@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        var app = angular.module("myApp", []);
+
+        app.controller("myCtrl", function ($scope, $http) {
+
+
+            $scope.faceresponse = false;
+            $scope.loading=false;
+
+            $scope.facecount = function () {
+                $scope.loading=true;
+
+                console.log($scope.obj);
+                var config = {
+
+                    headers: {
+                        "accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                };
+
+                $http.post("http://127.0.0.1:8000/faces/", $scope.obj, config).then(function (resp) {
+                    console.log(resp);
+                    $scope.faces = resp.data;
+                    $scope.faceresponse = true;
+                    $scope.loading=false;
+                  
+                });
+            }
+
+            $scope.objectresponse = false;
+            $scope.objectDetect = function () {
+                $scope.loading=true;
+                console.log($scope.obj);
+                var config = {
+
+                    headers: {
+                        "accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                };
+
+                $http.post("http://127.0.0.1:8000/mobile/", $scope.obj, config).then(function (resp) {
+                    console.log(resp);
+                    $scope.objects = resp.data;
+                    $scope.objectresponse = true;
+                    $scope.loading=false;
+                   
+                });
+            }
+
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl" class="col-md-12">
+        <br />
+
+
+
+
+        <input type="text" ng-model="obj.url" placeholder="Image URL">
+
+        <button ng-click="facecount()">Face Count</button>
+
+        <button ng-click="objectDetect()">Object Detect</button>
+
+
+
+        <p>
+            Sample URL: <br />
+
+            https://s3.amazonaws.com/nikeinc/assets/36722/Team-India-Kit-2015_16_9_hd_1600.jpg?1421176399
+        </p>
+
+        <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true" ng-if="loading==true"></i>
+        <span class="sr-only">Refreshing...</span>
+
+
+        <div class="row">
+        <div class="card col-md-6" ng-if="faceresponse==true">
+            <img class="card-img-top" src="{{obj.url}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Face Count</h5>
+                <p class="card-text">No of faces in the above image is </p>
+                <a href="#" class="btn btn-primary">{{faces.NoofFaces}}</a>
+            </div>
+        </div>
+
+        <div class="card col-md-6" ng-if="objectresponse==true">
+            <img class="card-img-top" src="{{obj.url}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Object Detection</h5>
+                <p class="card-text">What are the objects in the image </p>
+                <span ng-repeat="x in objects.result">
+                    {{x}}
+                </span>
+
+                {{objects.result|json}}
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
